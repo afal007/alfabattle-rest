@@ -1,9 +1,9 @@
 server:
   port: 8080
   ssl:
-    enabled: false
+    enabled: true
 #    client-auth: need
-    key-store: alfabattle.jks
+    key-store: docker/alfabattle.jks
     key-store-password: password
     key-store-type: JKS
     key-store-provider: SUN

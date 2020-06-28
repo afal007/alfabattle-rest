@@ -1,4 +1,4 @@
-package ru.afal.alfabattle.restwebsocket.controller.tmp.v1;
+package ru.afal.alfabattle.restwebsocket.controller.atm.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,25 +8,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.afal.alfabattle.api.AtmLocation;
 import ru.afal.alfabattle.restwebsocket.exception.AtmNotFoundException;
-import ru.afal.alfabattle.restwebsocket.service.AtmService;
+import ru.afal.alfabattle.restwebsocket.model.PaymentMode;
+import ru.afal.alfabattle.restwebsocket.service.AtmLocationService;
 
-@RestController("/")
+@RestController("/atm/v1")
 @RequiredArgsConstructor
 public class AtmController {
 
-  private final AtmService atmService;
+  private final AtmLocationService atmLocationService;
 
-  @GetMapping("/atms/{deviceID}")
+  @GetMapping("/{deviceID}")
   public AtmLocation getAtmLocation(@PathVariable("deviceID") Long deviceID) {
-    return atmService.findAtm(deviceID).orElseThrow(AtmNotFoundException::new);
+    return atmLocationService.findAtmByID(deviceID);
   }
 
-  @GetMapping("/atms/nearest")
-  public ResponseEntity<AtmLocation> getAtmLocation(
+  @GetMapping("/nearest")
+  public AtmLocation getAtmLocation(
     @RequestParam("latitude") double latitude,
     @RequestParam("longitude") double longitude,
-    @RequestParam(value = "payments", required = false) Boolean payments
+    @RequestParam(value = "payments", required = false) Boolean paymentsEnabled
   ) {
-    return ResponseEntity.ok(atmService.findNearest(latitude, longitude, payments));
+    return atmLocationService.findNearest(latitude, longitude, PaymentMode.from(paymentsEnabled));
   }
 }
