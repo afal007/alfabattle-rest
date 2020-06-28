@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  alfabattle-rest-websocker:
+    image: iamhostage/alfabattle-rest:0.0.1-SNAPSHOT
+    ports:
+    - 8083:8080
+    volumes:
+    - C:\Users\Alex\IdeaProjects\alfabattle-rest-websocket:/etc
+    environment:
+      SPRING_CONFIG_LOCATION: /etc/custom-application.yml
+

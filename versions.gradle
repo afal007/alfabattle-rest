@@ -1,0 +1,6 @@
+ext.versions = [
+  'jetbrains'        : '15.0',
+  'openapi'          : '1.4.1',
+  'apache-httpcore'  : '4.4.13',
+  'openfeign-starter': '2.2.3.RELEASE'
+]

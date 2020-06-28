@@ -1,0 +1,5 @@
+rootProject.name = 'alfabattle-rest'
+include 'api'
+include 'alfa-atm-api'
+include 'dal'
+

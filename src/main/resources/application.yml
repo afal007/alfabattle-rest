@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  ssl:
+    enabled: false
+#    client-auth: need
+    key-store: alfabattle.jks
+    key-store-password: password
+    key-store-type: JKS
+    key-store-provider: SUN
+#    trust-store: alfabattle.jks
+#    trust-store-password: password
+#    trust-store-type: JKS
+
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
+  service:
+    url: https://apiws.alfabank.ru/alfabank/alfadevportal/atm-service
+
+spring:
+  codec:
+    log-request-details: true
+  mvc:
+    log-request-details: true
+logging:
+  level:
+    root: info

@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  ssl:
+    enabled: true
+#    client-auth: need
+    key-store: /etc/alfabattle.jks
+    key-store-password: changeme
+    key-store-type: JKS
+    key-store-provider: SUN
+    trust-store: /etc/alfabattle.jks
+    trust-store-password: changeme
+    trust-store-type: JKS
+
+springdoc:
+  swagger-ui:
+    enabled: false
+
+feign:
+  service:
+    url: https://localhost:8081
