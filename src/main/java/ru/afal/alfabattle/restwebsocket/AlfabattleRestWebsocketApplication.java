@@ -4,12 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@EnableFeignClients
+@EnableFeignClients("ru.afal.alfabattle")
 @SpringBootApplication
 public class AlfabattleRestWebsocketApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(AlfabattleRestWebsocketApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(AlfabattleRestWebsocketApplication.class, args);
+    }
 
 }

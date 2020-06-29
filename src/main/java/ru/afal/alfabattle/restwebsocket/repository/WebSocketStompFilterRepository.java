@@ -3,8 +3,6 @@ package ru.afal.alfabattle.restwebsocket.repository;
 import java.lang.reflect.Type;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -24,10 +22,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebSocketStompFilterRepository implements FilterRepository {
 
+    private final WebSocketStompClient stompClient;
     @Value("${web.socket.url")
     private String webSocketUrl;
-
-    private final WebSocketStompClient stompClient;
 
     @NotNull
     @Override
@@ -55,6 +52,9 @@ public class WebSocketStompFilterRepository implements FilterRepository {
         private final Object monitor = new Object();
 
         private volatile String payload;
+        private volatile boolean isDone;
+        private volatile boolean isRunning;
+        private volatile boolean isCanceled;
 
         @Override
         public @NotNull Type getPayloadType(@NotNull StompHeaders headers) {
@@ -71,24 +71,36 @@ public class WebSocketStompFilterRepository implements FilterRepository {
 
         @Override
         public boolean cancel(boolean mayInterruptIfRunning) {
-            return false;
+            if(isCanceled) {
+                return false;
+            }
+            synchronized(monitor) {
+                if(isCanceled || !mayInterruptIfRunning && isRunning) {
+                    return false;
+                }
+                isDone = true;
+                isCanceled = true;
+                monitor.notify();
+                return true;
+            }
         }
 
         @Override
         public boolean isCancelled() {
-            return false;
+            return isCanceled;
         }
 
         @Override
         public boolean isDone() {
-            return false;
+            return isDone;
         }
 
         @Override
         public String get() throws InterruptedException {
-            if(payload == null) {
+            if(payload == null && !isCanceled) {
                 synchronized(monitor) {
-                    if(payload == null) {
+                    if(payload == null && !isCanceled) {
+                        isRunning = true;
                         monitor.wait();
                     }
                 }
@@ -99,9 +111,10 @@ public class WebSocketStompFilterRepository implements FilterRepository {
 
         @Override
         public String get(long timeout, @NotNull TimeUnit unit) throws InterruptedException {
-            if(payload == null) {
+            if(payload == null && !isCanceled) {
                 synchronized(monitor) {
-                    if(payload == null) {
+                    if(payload == null && !isCanceled) {
+                        isRunning = true;
                         monitor.wait(unit.toMillis(timeout));
                     }
                 }

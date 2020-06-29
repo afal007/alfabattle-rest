@@ -6,9 +6,10 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import ru.afal.alfabank.atmapi.model.ATMDetails;
 import ru.afal.alfabattle.api.AtmLocation;
+import ru.afal.alfabattle.dal.dao.AlfaAtmDAO;
 import ru.afal.alfabattle.restwebsocket.exception.AtmNotFoundException;
-import ru.afal.alfabattle.restwebsocket.model.Atm;
 import ru.afal.alfabattle.restwebsocket.model.PaymentMode;
 
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AlfaAtmLocationService implements AtmLocationService {
 
-    private final AlfaAtmClient alfaAtmClient;
+    private final AlfaAtmDAO alfaAtmDAO;
 
     @Override
     public @NotNull AtmLocation findAtmByID(long deviceID) {
-        return alfaAtmClient.getAtms()
+        return alfaAtmDAO.getAtmDetails()
             .getData()
             .getAtms()
             .stream()
@@ -33,13 +34,13 @@ public class AlfaAtmLocationService implements AtmLocationService {
 
     @Override
     public @NotNull AtmLocation findNearest(double latitude, double longitude, @NotNull PaymentMode paymentMode) {
-        return alfaAtmClient.getAtms()
+        return alfaAtmDAO.getAtmDetails()
             .getData()
             .getAtms()
             .stream()
-            .sorted(Comparator.comparingDouble(l -> getDistance(l.getCoordinates().getLatitude(),
+            .sorted(Comparator.comparingDouble(l -> getDistance(Double.valueOf(l.getCoordinates().getLatitude()),
                 latitude,
-                l.getCoordinates().getLongitude(),
+                Double.valueOf(l.getCoordinates().getLongitude()),
                 longitude
             )))
             .filter(a -> paymentMode != PaymentMode.ENABLED ||
@@ -59,12 +60,12 @@ public class AlfaAtmLocationService implements AtmLocationService {
         return d * d;
     }
 
-    private AtmLocation map(Atm atm) {
+    private AtmLocation map(ATMDetails atm) {
         AtmLocation atmLocation = new AtmLocation();
         atmLocation.setCity(atm.getAddress().getCity());
-        atmLocation.setDeviceId(atm.getDeviceId());
-        atmLocation.setLatitude(atm.getCoordinates().getLatitude());
-        atmLocation.setLongitude(atm.getCoordinates().getLongitude());
+        atmLocation.setDeviceId((long) atm.getDeviceId());
+        atmLocation.setLatitude(Double.valueOf(atm.getCoordinates().getLatitude()));
+        atmLocation.setLongitude(Double.valueOf(atm.getCoordinates().getLongitude()));
         atmLocation.setLocation(atm.getAddress().getLocation());
         atmLocation.setPayments("Y".equals(atm.getServices().getPayments()));
         return atmLocation;

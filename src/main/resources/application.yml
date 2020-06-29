@@ -2,7 +2,7 @@ server:
   port: 8080
   ssl:
     enabled: true
-#    client-auth: need
+    #    client-auth: need
     key-store: docker/alfabattle.jks
     key-store-password: password
     key-store-type: JKS
@@ -11,6 +11,10 @@ server:
 #    trust-store-password: password
 #    trust-store-type: JKS
 
+atm:
+  service:
+    url: https://apiws.alfabank.ru/alfabank/alfadevportal/atm-service
+    client-key: c5510d3c-ea4a-4b30-8d58-6377d44bc369
 
 feign:
   client:
@@ -27,4 +31,4 @@ spring:
     log-request-details: true
 logging:
   level:
-    root: info
+    root: debug

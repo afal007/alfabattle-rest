@@ -1,0 +1,5 @@
+dependencies {
+  api project(':alfa-atm-api')
+  implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: versions['apache-httpcore']
+  implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: versions['openfeign-starter']
+}
