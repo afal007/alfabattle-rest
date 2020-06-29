@@ -31,4 +31,4 @@ spring:
     log-request-details: true
 logging:
   level:
-    root: debug
+    root: info

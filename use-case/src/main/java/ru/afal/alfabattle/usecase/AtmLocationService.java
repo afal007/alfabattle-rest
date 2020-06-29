@@ -1,10 +1,10 @@
-package ru.afal.alfabattle.restwebsocket.service;
+package ru.afal.alfabattle.usecase;
 
 import org.jetbrains.annotations.NotNull;
 
 import ru.afal.alfabattle.api.AtmLocation;
-import ru.afal.alfabattle.restwebsocket.exception.AtmNotFoundException;
-import ru.afal.alfabattle.restwebsocket.model.PaymentMode;
+import ru.afal.alfabattle.usecase.exception.AtmNotFoundException;
+import ru.afal.alfabattle.usecase.model.PaymentMode;
 
 /**
  * Service for locating ATMs by parameters.
@@ -21,7 +21,7 @@ public interface AtmLocationService {
      *
      * @throws AtmNotFoundException if ATM with given deviceID was not found.
      */
-    @NotNull AtmLocation findAtmByID(long deviceID) throws AtmNotFoundException;
+    @NotNull AtmLocation findAtmByID(int deviceID) throws AtmNotFoundException;
 
     /**
      * Find nearest ATM by coordinates and payment mode.

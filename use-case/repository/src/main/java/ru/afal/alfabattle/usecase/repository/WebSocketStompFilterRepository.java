@@ -1,4 +1,4 @@
-package ru.afal.alfabattle.restwebsocket.repository;
+package ru.afal.alfabattle.usecase.repository;
 
 import java.lang.reflect.Type;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import ru.afal.alfabattle.restwebsocket.model.WebSocketFilter;
+import ru.afal.alfabattle.usecase.model.WebSocketFilter;
 
 import lombok.RequiredArgsConstructor;
 

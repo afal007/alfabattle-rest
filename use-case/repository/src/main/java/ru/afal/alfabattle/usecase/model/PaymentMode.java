@@ -1,4 +1,4 @@
-package ru.afal.alfabattle.restwebsocket.model;
+package ru.afal.alfabattle.usecase.model;
 
 /**
  * ATM payment mode.

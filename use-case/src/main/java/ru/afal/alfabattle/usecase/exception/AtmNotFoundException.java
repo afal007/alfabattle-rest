@@ -1,4 +1,4 @@
-package ru.afal.alfabattle.restwebsocket.exception;
+package ru.afal.alfabattle.usecase.exception;
 
 import java.util.Optional;
 

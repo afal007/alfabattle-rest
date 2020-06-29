@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableFeignClients("ru.afal.alfabattle")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "ru.afal.alfabattle")
 public class AlfabattleRestWebsocketApplication {
 
     public static void main(String[] args) {

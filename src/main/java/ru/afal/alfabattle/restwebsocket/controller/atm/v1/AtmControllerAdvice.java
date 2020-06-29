@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import ru.afal.alfabattle.api.Error;
-import ru.afal.alfabattle.restwebsocket.exception.AtmNotFoundException;
+import ru.afal.alfabattle.usecase.exception.AtmNotFoundException;
 
 @ControllerAdvice("ru.afal.alfabattle.restwebsocket.controller.atm")
 public class AtmControllerAdvice {

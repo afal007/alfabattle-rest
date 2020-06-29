@@ -1,8 +1,8 @@
-package ru.afal.alfabattle.restwebsocket.model;
+package ru.afal.alfabattle.usecase.model;
 
 import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class WebSocketFilter {
-  String value;
+    String value;
 }

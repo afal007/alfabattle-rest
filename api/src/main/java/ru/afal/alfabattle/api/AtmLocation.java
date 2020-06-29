@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class AtmLocation {
-  private Long deviceId;
-  private Double latitude;
-  private Double longitude;
-  private String city;
-  private String location;
-  private boolean payments;
+    private String city;
+    private String location;
+    private Double latitude;
+    private Double longitude;
+    private Integer deviceId;
+    private boolean paymentsEnabled;
 }
