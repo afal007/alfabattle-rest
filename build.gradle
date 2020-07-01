@@ -61,14 +61,15 @@ dependencies {
   implementation project(':interactor')
 
   implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.springframework.boot:spring-boot-starter-webflux'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
   runtimeOnly group: 'com.lmax', name: 'disruptor', version: versions['disruptor']
 
-  implementation group: 'org.springframework.cloud', name: 'spring-cloud-openfeign-core', version: versions['openfeign-starter']
+  implementation group: 'io.springfox', name: 'springfox-swagger2', version: versions['swagger']
+  implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: versions['swagger']
 
-  implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: versions['openapi']
+  implementation group: 'org.springframework.cloud', name: 'spring-cloud-openfeign-core', version: versions['openfeign-starter']
 }
 
 test {
