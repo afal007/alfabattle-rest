@@ -1,7 +1,8 @@
 rootProject.name = 'alfabattle-rest'
+
 include 'api'
 include 'alfa-atm-api'
 include 'dal'
-include 'use-case'
-include 'use-case:repository'
+include 'interactor'
+include 'interactor:gateway'
 

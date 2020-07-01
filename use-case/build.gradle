@@ -1,4 +1,0 @@
-dependencies {
-  api project(':use-case:repository')
-  implementation group: 'org.springframework', name: 'spring-context'
-}

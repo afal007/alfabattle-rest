@@ -1,5 +1,6 @@
 dependencies {
   api project(':alfa-atm-api')
+  implementation 'org.springframework.boot:spring-boot-starter-websocket'
   implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: versions['apache-httpcore']
   implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: versions['openfeign-starter']
 }
