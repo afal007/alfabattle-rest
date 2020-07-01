@@ -21,14 +21,7 @@ feign:
     config:
       default:
         loggerLevel: full
-  service:
-    url: https://apiws.alfabank.ru/alfabank/alfadevportal/atm-service
 
 spring:
-  codec:
-    log-request-details: true
   mvc:
     log-request-details: true
-logging:
-  level:
-    root: info

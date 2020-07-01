@@ -42,7 +42,11 @@ public class AlfaAtmLocationInteractor implements AtmLocationInteractor {
 
         return atmLocationList.stream()
             .filter(a -> a.getLatitude() != null && a.getLongitude() != null)
-            .min(Comparator.comparingDouble(l -> getDistance(l.getLatitude(), latitude, l.getLongitude(), longitude)))
+            .min(Comparator.comparingDouble(l -> getDistance(l.getLatitude(),
+                latitude,
+                l.getLongitude(),
+                longitude
+            ))) // TODO extract comparator
             .orElseThrow(() -> new AtmNotFoundException("No ATMs with payment mode " + paymentMode + " were found"));
     }
 

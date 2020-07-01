@@ -1,0 +1,12 @@
+{
+  "properties": [
+    {
+      "name": "atm.service.url",
+      "type": "java.lang.String",
+      "description": "URL to alfabank ATM service."
+    }, {
+      "name": "atm.service.client-key",
+      "type": "java.lang.String",
+      "description": "Client key for alfabank REST API."
+    }
+  ] }

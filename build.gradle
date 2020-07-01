@@ -30,8 +30,15 @@ allprojects {
   dependencies {
     implementation group: 'org.jetbrains', name: 'annotations', version: versions['jetbrains']
 
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+      exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
   }
 }
 
@@ -51,23 +58,17 @@ configurations {
 }
 
 dependencies {
-  implementation project(':api')
   implementation project(':interactor')
 
   implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.springframework.boot:spring-boot-starter-log4j2'
   implementation 'org.springframework.boot:spring-boot-starter-webflux'
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
-  annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+  runtimeOnly group: 'com.lmax', name: 'disruptor', version: versions['disruptor']
+
+  implementation group: 'org.springframework.cloud', name: 'spring-cloud-openfeign-core', version: versions['openfeign-starter']
 
   implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: versions['openapi']
-  implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: versions['apache-httpcore']
-
-  implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: versions['openfeign-starter']
-
-  testImplementation('org.springframework.boot:spring-boot-starter-test') {
-    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-  }
 }
 
 test {

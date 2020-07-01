@@ -16,7 +16,9 @@ import ru.afal.alfabattle.api.atm.AtmLocation;
 import ru.afal.alfabattle.dal.atm.AlfaAtmDAO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class AlfaAtmLocationRepository implements AtmLocationRepository {
@@ -50,6 +52,7 @@ public class AlfaAtmLocationRepository implements AtmLocationRepository {
 
     private List<ATMDetails> getAtmDetailsList() {
         JSONResponseBankATMDetails atmDetails = alfaAtmDAO.getAtmDetails();
+        LOGGER.debug("JSONResponseBankATMDetails: {}", atmDetails);
         if(atmDetails.getSuccess() != null && !atmDetails.getSuccess()) {
             Error error = atmDetails.getError();
             if(error != null) {
