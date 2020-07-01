@@ -6,6 +6,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import ru.afal.alfabank.atmapi.atm.ATMDetails;
@@ -16,6 +19,7 @@ import ru.afal.alfabattle.api.atm.AtmLocation;
 import ru.afal.alfabattle.dal.atm.AlfaAtmDAO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,33 +30,35 @@ public class AlfaAtmLocationRepository implements AtmLocationRepository {
     private final AtmMapper atmMapper;
     private final AlfaAtmDAO alfaAtmDAO;
 
-    // TODO caching
+    // TODO: move to alfaAtmDAO?
+    @Setter(onMethod = @__({@Lazy, @Autowired}))
+    private AtmLocationRepository atmLocationRepository;
 
     @Override
     public @NotNull Optional<AtmLocation> findAtmByID(int deviceID) {
-        return getAtmDetailsList().stream()
+        return atmLocationRepository.findAll()
+            .stream()
             .filter(atm -> atm.getDeviceId() != null)
             .filter(atm -> deviceID == atm.getDeviceId())
-            .findFirst()
-            .map(atmMapper::map);
+            .findFirst();
     }
 
     @Override
+    @Cacheable(value = "atmLocationListCache", key = "#root.methodName")
     public @NotNull List<AtmLocation> findAll() {
         return getAtmDetailsList().stream().map(atmMapper::map).collect(Collectors.toList());
     }
 
     @Override
     public @NotNull List<AtmLocation> findAllByPaymentsEnabled(boolean enabled) {
-        return getAtmDetailsList().stream()
-            .map(atmMapper::map)
+        return atmLocationRepository.findAll()
+            .stream()
             .filter(a -> a.isPaymentsEnabled() == enabled)
             .collect(Collectors.toList());
     }
 
     private List<ATMDetails> getAtmDetailsList() {
         JSONResponseBankATMDetails atmDetails = alfaAtmDAO.getAtmDetails();
-        LOGGER.debug("JSONResponseBankATMDetails: {}", atmDetails);
         if(atmDetails.getSuccess() != null && !atmDetails.getSuccess()) {
             Error error = atmDetails.getError();
             if(error != null) {

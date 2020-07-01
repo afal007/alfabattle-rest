@@ -1,5 +1,6 @@
 package ru.afal.alfabattle.rest.atm.v1;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +19,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "Operations with ATMs", produces = "application/json")
+@Api(tags = "Operations with ATMs")
 @RestController
-@RequestMapping("/atm/v1")
+@RequestMapping(value = "/atm/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class AtmController {
 

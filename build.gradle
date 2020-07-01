@@ -61,8 +61,12 @@ dependencies {
   implementation project(':interactor')
 
   implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-cache'
   implementation 'org.springframework.boot:spring-boot-starter-actuator'
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+  implementation group: 'org.ehcache', name: 'ehcache'
+  implementation group: 'javax.cache', name: 'cache-api'
 
   runtimeOnly group: 'com.lmax', name: 'disruptor', version: versions['disruptor']
 

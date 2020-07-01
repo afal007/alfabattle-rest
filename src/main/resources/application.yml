@@ -25,3 +25,6 @@ feign:
 spring:
   mvc:
     log-request-details: true
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
