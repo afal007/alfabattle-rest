@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
@@ -18,21 +17,23 @@ import ru.afal.alfabank.atmapi.atm.JSONResponseBankATMDetails;
 import ru.afal.alfabattle.api.atm.AtmLocation;
 import ru.afal.alfabattle.dal.atm.AlfaAtmDAO;
 
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository
-@RequiredArgsConstructor
 public class AlfaAtmLocationRepository implements AtmLocationRepository {
 
     private final AtmMapper atmMapper;
     private final AlfaAtmDAO alfaAtmDAO;
+    private final AtmLocationRepository atmLocationRepository;
 
-    // TODO: move to alfaAtmDAO?
-    @Setter(onMethod = @__({@Lazy, @Autowired}))
-    private AtmLocationRepository atmLocationRepository;
+    public AlfaAtmLocationRepository(
+        AtmMapper atmMapper, AlfaAtmDAO alfaAtmDAO, @Lazy AtmLocationRepository atmLocationRepository
+    ) {
+        this.atmMapper = atmMapper;
+        this.alfaAtmDAO = alfaAtmDAO;
+        this.atmLocationRepository = atmLocationRepository;
+    }
 
     @Override
     public @NotNull Optional<AtmLocation> findAtmByID(int deviceID) {
@@ -43,6 +44,7 @@ public class AlfaAtmLocationRepository implements AtmLocationRepository {
             .findFirst();
     }
 
+    // TODO: Move Cacheable to alfaAtmDAO?
     @Override
     @Cacheable(value = "atmLocationListCache", key = "#root.methodName")
     public @NotNull List<AtmLocation> findAll() {
